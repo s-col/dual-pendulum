@@ -1,12 +1,7 @@
 %SIMU_ANIMATION 結果のアニメーションを生成する
 
-skip_frames = 8;
+fps = 60;
 n_data = size(ts, 2);
-
-% NOTE: 以下2行は無くても動くが，l1,l2の宣言はこのファイル外であるため
-%       ここで再定義しておく．
-l1 = auxdata.l1;
-l2 = auxdata.l2;
 
 ax_r = l1 + l2;
 

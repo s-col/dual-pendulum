@@ -7,7 +7,7 @@ auxdata.m1 = 1.00;  % ‚¨‚à‚è1‚Ìd‚³[kg]
 auxdata.m2 = 1.00;  % ‚¨‚à‚è2‚Ìd‚³[kg]
 auxdata.l1 = 0.60;  % ƒƒbƒh1‚Ì’·‚³[m]
 auxdata.l2 = 0.60;  % ƒƒbƒh2‚Ì’·‚³[m]
-auxdata.c1 = 0.04;  % ”S«’ïR1[kgm^2/s]
-auxdata.c2 = 0.02;  % ”S«’ïR2[kgm^2/s]
+auxdata.c1 = 0.00;  % ”S«’ïR1[kgm^2/s]
+auxdata.c2 = 0.00;  % ”S«’ïR2[kgm^2/s]
 end
 

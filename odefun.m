@@ -1,13 +1,13 @@
-function dx = odefun(t, x, auxdata)
+function dx = odefun(t, x)
 %ODEFUN í”÷•ª•û’ö®
 
-g = auxdata.g;
-m1 = auxdata.m1;
-m2 = auxdata.m2;
-l1 = auxdata.l1;
-l2 = auxdata.l2;
-c1 = auxdata.c1;
-c2 = auxdata.c2;
+g = PendulumConst.g;
+m1 = PendulumConst.m1;
+m2 = PendulumConst.m2;
+l1 = PendulumConst.l1;
+l2 = PendulumConst.l2;
+c1 = PendulumConst.c1;
+c2 = PendulumConst.c2;
 
 dx = zeros(size(x));
 

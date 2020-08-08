@@ -4,52 +4,54 @@ clear; close all;
 
 %% シミュレーション設定
 odf = @odefun;      % 常微分方程式を定める関数
-t_simu = 30;       % シミュレーション時間[s]
-dt_simu = 0.001;    % シミュレーション刻み[s]
+t_simu = 30;        % シミュレーション時間[s]
+tol = 1e-8;         % 許容誤差
+dt_min = 0.000;       % 刻み幅下限
+dt_max = 0.005;       % 刻み幅上限
 
-freq_save = 10;    % 記録間隔[steps]
-freq_disp = 5000;  % 進捗表示間隔[steps]
+freq_save = 1;    % 記録間隔[steps]
+freq_disp = 50;  % 進捗表示間隔[steps]
 
 %% auxdataを取得
 auxdata = set_auxdata();
 
 %% シミュレーション
-steps = int64(0);
-steps_f = int64(t_simu/dt_simu);
-n_data = steps_f / freq_save + 1;
 
 [t, x] = init();  % 初期値を設定
+dt_simu = dt_max;
 
 % 結果を格納する配列
-ts = zeros(1, n_data);
-xs = zeros(size(x, 1), n_data);
+ts = [];
+xs = [];
+flg = 0;
+steps = 0;
 
 ts(1) = t;
 xs(:, 1) = x;
 
-idx_data = 2;
-
-while steps <= steps_f
+while flg == 0
     steps = steps + 1;
     
     % シミュレーションを1ステップ進める
-    [t, x] = step_rk(odf, t, x, dt_simu, auxdata);
+    [t, x, dt_simu, flg] = step_rk45(odf, t, x, dt_simu, dt_min, dt_max, tol, t_simu);
     
     % 角度を正規化
     % x(1:2) = normalize_angle(x(1:2)); 
     
     % 記録
     if mod(steps, freq_save) == 0
-        ts(idx_data) = t;
-        xs(:, idx_data) = x;
-        idx_data = idx_data + 1;
+        ts(end+1) = t;
+        xs(:, end+1) = x;
     end
     
     % 進捗表示
     if mod(steps, freq_disp) == 0
-        fprintf('time = %.2f\n', t);
+        fprintf('time = %.2f  dt = %.7f\n', t, dt_simu);
     end 
 end
+
+%% flg の表示
+fprintf("flg = %d\n", flg)
 
 %% 力学的エネルギーを計算
 g = auxdata.g;
